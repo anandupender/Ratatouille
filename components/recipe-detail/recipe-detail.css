@@ -1,0 +1,25 @@
+h2{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.time_temp_left, .left{
+    position: relative;
+    float: left;
+    border-radius: 8px;
+
+}
+
+.time_temp_right, .right{
+    position: relative;
+    float: right;
+}
+
+.iphone{
+    border: 1px solid black;
+    display:inline-block;
+    width: 400px;
+    border-radius: 6px;
+    margin: 30px;
+
+}

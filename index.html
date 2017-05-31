@@ -1,1 +1,28 @@
-Hello World
+<!doctype html>
+<html>
+    <head>
+        <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport">
+        <title>Ratatouille App</title>
+        <link rel="stylesheet" type="text/css" href="main.css" />
+    </head>
+    <body>
+        <h1>Ratatouille</h1>
+        <p>
+            Welcome to our dynamic recipe device. Pick a recipe once and don't worry about rereading, touching screens with messy hands, or looking down at oyur laptop. Ratatat has you covered!
+        </p>
+        <a href="recipe-display.html"><button>  Get Started! </button></a>
+        <script type="text/javascript">
+            //<![CDATA[
+            // Angular doesn't work using the file protocol and it dies with an obscure error
+            // message.  Since the project's files are accessible using either the file or
+            // http protocols we warn the user if they are not using http.
+            if(window.location.protocol !== 'http:') {
+                var msg = "Project #5 files must be accessed with the http protocol (not from local files)."  +
+                                "\nUse the URL http://localhost:3000";
+                console.error(msg);
+                alert(msg);
+            }
+            //]]>
+        </script>
+    </body>
+</html>

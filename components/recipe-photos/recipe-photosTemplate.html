@@ -1,0 +1,21 @@
+<div ng-repeat="photo in main.userPhotos">
+	<md-content class="md-padding" layout-xs="column" layout="row">
+		<div flex-xs flex-gt-xs="50" layout="column">
+			<md-card>
+				<md-card-header>
+		         	<md-card-header-text>
+		            	<span class="md-title">{{main.currUser.first_name}} {{main.currUser.last_name}}</span>
+		          </md-card-header-text>
+		        </md-card-header>
+		 		<img ng-src="images/{{photo.file_name}}" class="md-card-image" alt="image caption">
+		 		<p>{{photo.date_time}}</p>
+		 		<md-card-content ng-repeat="comment in photo.comments">
+		 			<hr>
+		 			<a ng-href="#!/users/{{comment.user._id}}" class = "cs142-main-comment-name">{{comment.user.first_name}} {{comment.user.last_name}}</a>
+		   			{{comment.date_time}}
+		   			<p> {{comment.comment}}</p>
+		 		</md-card-content>
+			</md-card>
+		</div>
+	</md-content>
+</div>

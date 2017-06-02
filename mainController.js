@@ -1,60 +1,49 @@
-'use strict';
+"use strict";
 
-var cs142App = angular.module('cs142App', ['ngRoute', 'ngMaterial']);
+/**
+ * Create an angular module called 'cs142App' and assign it to a DOM property with the same name.
+ * The [] argument specifies module is to be created and doesn't require any other module.
+ */
+//var cs142App = angular.module('cs142App', []);
+var cs142App = angular.module('cs142App', ['ngRoute']);
+
+/**
+ * Create a controller named 'MainController'.  The array argument specifies the controller
+ * function and what dependencies it has.  We specify the '$scope' service so we can have access
+ * to the angular scope of view template.
+ */
+cs142App.controller('MainController', ['$scope', function($scope) {
+   // We defined an object called 'main' with a single property 'title' that is used
+   // by the html view template to get the page's title in the browser tab.
+   $scope.main = {};
+   $scope.main.title = 'CS142 Project #4';
+   $scope.main.pages = ["Example", "States"];
+   $scope.main.currPage = 0;
+
+   /*
+    *  buttonClick - The handler function called when a  button is clicked.  It is passed
+    *  the button name.
+    */
+
+   $scope.buttonClick = function(buttonName) {
+      $scope.buttonWasClicked = buttonName;
+      $scope.main.currPage = ($scope.main.currPage + 1)%2;
+   };
+
+}]);
 
 cs142App.config(['$routeProvider',
-    function ($routeProvider) {
-        $routeProvider.
-            when('/recipes', {
-                templateUrl: 'components/recipe-list/recipe-listTemplate.html',
-                controller: 'RecipeListController'
-            }).
-            when('/recipes/:userId', {
-                templateUrl: 'components/recipe-detail/recipe-detailTemplate.html',
-                controller: 'RecipeDetailController'
-            }).
-            when('/photos/:userId', {
-                templateUrl: 'components/recipe-photos/recipe-photosTemplate.html',
-                controller: 'RecipePhotosController'
-            }).
-            otherwise({
-                redirectTo: '/users'
-            });
-    }]);
-
-cs142App.controller('MainController', ['$scope', '$location','$routeParams',
-    function ($scope, $location, $routeParams) {
-        $scope.main = {};
-        $scope.main.title = 'Recipes';
-        $scope.main.urlPath = $location.path();
-        $scope.main.currRecipe = '';
-        $scope.main.currTemp = 0;
-        $scope.main.timer = 0;
-        $scope.main.targetTemp = 0;
-        $scope.main.laser = 0;
-
-        $scope.main.userID = '';
-
-        $scope.FetchModel = function(url, doneCallback) {
-            var xhr = new XMLHttpRequest();
-            function xhrHandler() {
-                if (xhr.readyState!== 4){ 
-                    return; 
-                }
-                if (xhr.status !== 200) {
-                    return;
-                }
-                var text = JSON.parse(xhr.responseText);
-                doneCallback(text);
-            }
-            xhr.onreadystatechange = xhrHandler;
-            xhr.open("GET", url);
-            xhr.send();
-        };
-        
-        $scope.FetchModel("/test/info", function (model){
-            $scope.$apply(function () {
-                $scope.main.version = model.__v;
-            });
-        });
-    }]);
+  function($routeProvider) {
+    $routeProvider.
+      when('/example', {
+        templateUrl: 'components/example/exampleTemplate.html',
+        controller: 'ExampleController'
+      }).
+      when('/states', {
+        templateUrl: 'components/states/statesTemplate.html',
+        controller: 'StatesController'
+      }).
+      otherwise({
+        redirectTo: '/example'
+      });
+  }]);

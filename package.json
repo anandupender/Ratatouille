@@ -1,18 +1,15 @@
 {
-  "name": "project4",
+  "name": "project3",
   "version": "1.0.0",
-  "description": "CS142 Project #4 - Getting started with AngularJS",
-  "main": "webServer.js",
+  "description": "cs142 project3 - JavaScript and the DOM",
+  "dependencies": {
+    "jshint": "^2.9.1-rc2"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo Test your code by opening http://localhost:3000 in your browser.",
+    "test":  "echo Test your code by opening datapicker.html and cs142-test-table.html in your browser.",
     "jshint": "./node_modules/.bin/jshint --config .jshintrc --exclude=node_modules . || exit 0"
   },
   "author": "Mendel Rosenblum <mendel@cs.stanford.edu> (http://www.stanford.edu/~mendel)",
-  "license": "ISC",
-  "dependencies": {
-    "angular": "^1.6.4",
-    "angular-route": "^1.6.4",
-    "express": "^4.14.1",
-    "jshint": "^2.9.4"
-  }
+  "license": "ISC"
 }

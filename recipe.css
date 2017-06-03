@@ -1,0 +1,112 @@
+table{
+	border-collapse: collapse;
+	width: 60%;
+	font-family: helvetica;
+	font-size: 16px;
+	border: 3px solid #FF7D75;
+}
+
+td{
+	text-align: center;
+	height: 30px;
+    vertical-align: middle;
+}
+
+thead tr:nth-child(1) {
+	width: 30%;
+	height: 75px;
+	background-color: #FF7D75;	
+	color: white;
+	font-size: 24px;
+}
+
+thead tr:nth-child(2) {
+	height:50px;
+}
+
+tbody td:hover{
+	background-color: #FFEFEE;
+	cursor:pointer;
+}
+
+
+h1, h2, h3, p{
+	padding-left: 20px;
+	padding-right: 20px;
+	font-family: helvetica;
+}
+
+a{
+	margin:20px;
+	font-size: 24px;
+	color: #3F51B5;
+	text-decoration: none
+
+}
+
+.main-cs142-version{
+	padding:20px;
+	font-size: 12px;
+}
+
+button, .time_temp_left, .time_temp_right{
+    border: 2px solid #3F51B5;
+    background-color: white;
+    color: #3F51B5;
+    padding: 15px 10px;
+    margin: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #3F51B5; 
+    color: white;
+}
+
+.collapsible { display:none; }
+.inbutton { background-color:blue; }
+#SystemMessage { position: absolute; top: 5px; right: 5px; background-color: DarkSlateBlue; color: #ffffff; right: 5px; display:none; }
+#SpeedMessage { position: absolute; top: 5px; right: 5px; background-color: White; color: #ff0000; right: 400; display:none; }
+
+.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+    display: block !important;
+    padding: 0.9em 75px 0.9em 15px !important;
+}
+div.ui-slider-switch {
+    right: 0 !important;
+    width: 25% !important;
+}
+
+h2{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.time_temp_left, .left{
+    position: relative;
+    float: left;
+    border-radius: 8px;
+
+}
+
+.time_temp_right, .right{
+    position: relative;
+    float: right;
+}
+
+.iphone, #newRecipe{
+	padding: 10px;
+	text-align: center;
+    border: 1px solid black;
+    display:inline-block;
+    width: 400px;
+    border-radius: 6px;
+    margin: 30px;
+
+}

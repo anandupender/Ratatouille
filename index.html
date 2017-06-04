@@ -15,7 +15,7 @@
         <script language="javascript" type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
          
         <meta charset="UTF-8">
-        <script>
+        <!-- <script>
             // var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
             var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
             connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
@@ -54,57 +54,43 @@
                 console.log('OnOff: ' + OnOff); 
                 connection.send(OnOff);
             }
-        </script>
+        </script> -->
     </head>
 
-    <body layout="column">
+    <body id="body" layout="column">
 
         <div class="container" flex layout="row">
 
-            <md-sidenav md-is-locked-open="true" class="md-whiteframe-z2">
-               
-            </md-sidenav>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            </div>
 
-            <md-content flex>
-                <div ng-view></div>
-                <label for="flipper"><h2>Adjust Temp Sensor</h2></label>
-                <select name="slider" id="flipper" data-role="slider" onchange="LaserToggle();">
-                    <option value="off">Off</option>
-                    <option value="on">On</option>
-                </select> 
+        <div id="main">
 
-              <!-- <div class = "iphone">
-                <button class = "left" ng-click="decrement()">
+            <label for="flipper"><p>Adjust Temp Sensor</p></label>
+            <select name="slider" id="flipper" data-role="slider" onchange="LaserToggle();">
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select> 
+
+            <div id="newRecipe">
+                 <script type="text/javascript" src="Recipe.js"></script>
+                <script type="text/javascript">
+                  // recipe1 = new Recipe("recipe1", function (myRecipe, id) {
+                  //   console.log("REcipe with id", id);
+                  // });
+                  recipe1 = new Recipe(1, 001, 0); //recipenum, recipe id, step counter var
+                  recipe1.render();
+                </script>
+                <button class = "left" onclick="prevStep()">
                     Previous Step
-                  </button>
-                  <button class = "right" ng-click="increment()">
+                </button>
+                <button class = "right" onclick="nextStep()">
                     Next Step
-                 </button></br></br></br></br>
-                  <h2>{{main.currStep.text}}</h2>
-                  </br>
-                  <div class = "time_temp_left">{{main.currTemp}}F / {{main.targetTemp}}F</div>
-                  <div class = "time_temp_right">Timer: {{main.timer}} min</div>
-
-              </div> -->
-                <div id="newRecipe">
-                    <script type="text/javascript" src="Recipe.js"></script>
-                    <script type="text/javascript">
-
-                      // recipe1 = new Recipe("recipe1", function (myRecipe, id) {
-                      //   console.log("REcipe with id", id);
-                      // });
-                      recipe1 = new Recipe(1, 001, 0); //recipenum, recipe id, step counter var
-                      recipe1.render();
-                    </script>
-                    <button class = "left" onclick="recipe1.prevStep()">
-                        Previous Step
-                    </button>
-                    <button class = "right" onclick="recipe1.nextStep()">
-                        Next Step
-                    </button></br>
-                </div>
-
-            </md-content>
+                </button></br>
+            </div>
+        </div>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Recipes</span>
 
         </div>
 

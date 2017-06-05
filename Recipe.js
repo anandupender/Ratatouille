@@ -140,7 +140,7 @@ function updateTempAndTimer(){
 
 }
 
-var connection = new WebSocket('wss://websocketstest.local:81/', ['arduino']);
+var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
 connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
 connection.onerror = function (error) {    console.log('WebSocket Error ', error);};
 connection.onmessage = function (e) {  

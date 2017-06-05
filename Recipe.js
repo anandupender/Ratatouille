@@ -17,7 +17,9 @@ var recipe2 = {_id: "002", name: "Chicken & Basil", steps: [{text: "Ready to mak
 
 var recipes = [recipe1, recipe2];
 
-var currRecipe;
+var currRecipe = new Recipe(0, 001, 0);
+
+var currTemp;
 
 function Recipe(myRecipe, id, stepCounter){
 	this.myRecipe = recipes[myRecipe];
@@ -32,16 +34,16 @@ Recipe.prototype.render = function(){
 	var newRecipe = document.getElementById("newRecipe");
 	console.log("newRecipe: ", newRecipe);
 
-  var elements = document.getElementsByClassName("step");
+  var elements = document.getElementsByClassName("step");   //clear past step
   console.log("divs: ", elements);
-    while(elements.length > 0){
-        elements[0].parentNode.removeChild(elements[0]);
-    }
-    var step = document.createElement('div');
-    step.innerHTML = this.myRecipe.steps[this.stepCounter].text;
-    step.className = "step";
-    console.log("long: ", this.myRecipe.steps[this.stepCounter].text);
-    newRecipe.appendChild(step);
+  while(elements.length > 0){
+      elements[0].parentNode.removeChild(elements[0]);
+  }
+  var step = document.createElement('div');
+  step.innerHTML = this.myRecipe.steps[this.stepCounter].text;
+  step.className = "step";
+  console.log("long: ", this.myRecipe.steps[this.stepCounter].text);
+  newRecipe.appendChild(step);
 
 };
 
@@ -52,22 +54,17 @@ function nextStep(){
    	var step = document.getElementById("step");
     var elements = document.getElementsByClassName("step");
     elements[0].innerHTML = currRecipe.myRecipe.steps[currRecipe.stepCounter].text;
-
-    // if($scope.main.timer > 0){
-    //     setTimeout(function(){ 
-    //     alert("Timer is up, ready for next step");
-    //     }, $scope.main.timer*1000*60);   //increment to next step after timer
-    // }
-
+    updateTempAndTimer();
 };
 
 function prevStep(){
   if(currRecipe.stepCounter > 1){
     currRecipe.stepCounter--;
   }
-  var step = document.getElementById("step");
+  //var step = document.getElementById("step");
   var elements = document.getElementsByClassName("step");
   elements[0].innerHTML = currRecipe.myRecipe.steps[currRecipe.stepCounter].text;
+  updateTempAndTimer();
 
 };
 
@@ -101,6 +98,82 @@ function fillSidebar(){
   });
       console.log("recipe list: ", recipes)
 }
+
+function updateTempAndTimer(){
+  var newRecipe = document.getElementById("newRecipe");
+
+  var time = document.getElementsByClassName("timer")[0];   //clear past step
+  if(time){
+    time.parentNode.removeChild(time);
+  }
+
+  var temp = document.getElementsByClassName("temp")[0];   //clear past step
+  if(temp){
+    temp.parentNode.removeChild(temp);
+  }
+
+    var timer = document.createElement('div');
+    timer.className = "timer";
+    newRecipe.appendChild(timer);
+  if(currRecipe.myRecipe.steps[currRecipe.stepCounter].trigger === "time"){
+    var currTimer = currRecipe.myRecipe.steps[currRecipe.stepCounter].time; 
+    timer.innerHTML = currTimer + "min left";
+
+     setTimeout(function(){ 
+      alert("Timer is up, ready for next step");
+      nextStep();
+      }, currTimer*1000*60);   //increment to next step after timer
+  }
+  else{
+    timer.innerHTML = "No Timer Needed";
+  }
+
+  var temp = document.createElement('div');
+  temp.className = "temp";
+  if(currRecipe.myRecipe.steps[currRecipe.stepCounter].trigger === "temperature"){
+    temp.innerHTML = currTemp + " F / " + currRecipe.myRecipe.steps[currRecipe.stepCounter].temp;
+  }
+  else{
+    temp.innerHTML = currTemp + " F";
+  }
+  newRecipe.appendChild(temp);
+
+}
+
+var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
+connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
+connection.onerror = function (error) {    console.log('WebSocket Error ', error);};
+connection.onmessage = function (e) {  
+    console.log('Server: ', e.data);
+
+    if(e.data[2] === "T"){  //TEMP
+        console.log("Reading in Temp");
+        var temp = e.data;
+        temp = temp.slice(15,-1); //remove beginning
+        console.log('Server (parsed): ', temp);
+        currTemp = parseInt(temp) * 9/5 + 32;
+    }
+};
+
+connection.onclose = function(e) {
+    console.log('Server: ', e.data);
+    $('#SystemStatusClicker').css("color", "red" );
+    IssueSystemMessage( "WebSocket Disconnected!" );
+ };
+
+function LaserToggle(){
+    var OnOff = document.getElementById('flipperData').value;  
+    if(OnOff === "on"){
+        OnOff = "*1";
+    }
+    else if(OnOff === "off"){
+        OnOff = "*0";
+    }
+    console.log('OnOff: ' + OnOff); 
+    connection.send(OnOff);
+}
+
+updateTempAndTimer();
 
 fillSidebar();
 

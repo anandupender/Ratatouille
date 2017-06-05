@@ -3,7 +3,7 @@
     <head>
         <title>Ratatouille</title>
 
-         <script language="javascript" type="text/javascript" src="ady.js"></script>
+        <!-- <script language="javascript" type="text/javascript" src="ady.js"></script> -->
         <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
 
         <script>
@@ -12,49 +12,10 @@
             });
         </script>
          <link rel="stylesheet" type="text/css" href="recipe.css" />
-        <script language="javascript" type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-         
+        <script language="javascript" type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <meta charset="UTF-8">
-        <!-- <script>
-            // var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
-            var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
-            connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
-            connection.onerror = function (error) {    console.log('WebSocket Error ', error);};
-            connection.onmessage = function (e) {  
-                console.log('Server: ', e.data);
+        <script type="text/javascript" src="Recipe.js"></script>
 
-                if(e.data[2] === "T"){  //TEMP
-                    console.log("Reading in Temp");
-                    var temp = e.data;
-                    temp = temp.slice(15,-1); //remove beginning
-                    console.log('Server (parsed): ', temp);
-                    var scope = angular.element($("#outer")).scope();
-                    var controllerElement = document.querySelector('html');
-                    var $scope = angular.element(controllerElement).scope();
-                    $scope.$apply(function(){
-                        $scope.main.currTemp = temp;
-                        console.log($scope.main.currTemp);
-                    })
-                }
-            };
-
-            connection.onclose = function(e) {
-                console.log('Server: ', e.data);
-                $('#SystemStatusClicker').css("color", "red" );
-                IssueSystemMessage( "WebSocket Disconnected!" );
-             };
-            function LaserToggle(){
-                var OnOff = document.getElementById('flipper').value;  
-                if(OnOff === "on"){
-                    OnOff = "*1";
-                }
-                else if(OnOff === "off"){
-                    OnOff = "*0";
-                }
-                console.log('OnOff: ' + OnOff); 
-                connection.send(OnOff);
-            }
-        </script> -->
     </head>
 
     <body id="body" layout="column">
@@ -67,18 +28,15 @@
 
         <div id="main">
 
-            <label for="flipper"><p>Adjust Temp Sensor</p></label>
-            <select name="slider" id="flipper" data-role="slider" onchange="LaserToggle();">
+            <label id="flipper" for="flipper"><p>Adjust Temp Sensor</p></label>
+            <select name="slider" id="flipperData" data-role="slider" onchange="LaserToggle()">
                 <option value="off">Off</option>
                 <option value="on">On</option>
             </select> 
 
             <div id="newRecipe">
-                 <script type="text/javascript" src="Recipe.js"></script>
+                <script type="text/javascript" src="Recipe.js"></script>
                 <script type="text/javascript">
-                  // recipe1 = new Recipe("recipe1", function (myRecipe, id) {
-                  //   console.log("REcipe with id", id);
-                  // });
                   recipe1 = new Recipe(1, 001, 0); //recipenum, recipe id, step counter var
                   recipe1.render();
                 </script>
@@ -90,7 +48,7 @@
                 </button></br>
             </div>
         </div>
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Recipes</span>
+        <span class = "hamburgerMenu" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Recipes</span>
 
         </div>
 

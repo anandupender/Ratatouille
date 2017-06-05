@@ -119,8 +119,9 @@ function updateTempAndTimer(){
     var currTimer = currRecipe.myRecipe.steps[currRecipe.stepCounter].time; 
     timer.innerHTML = currTimer + " min left";
 
-     setTimeout(function(){ 
+     myTimer = setTimeout(function(){ 
       alert("Timer is up, ready for next step");
+      clearTimeout(myTimer);
       nextStep();
       }, currTimer*1000*60);   //increment to next step after timer
   }

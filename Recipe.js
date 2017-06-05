@@ -119,11 +119,10 @@ function updateTempAndTimer(){
     var currTimer = currRecipe.myRecipe.steps[currRecipe.stepCounter].time; 
     timer.innerHTML = currTimer + " min left";
 
-     myTimer = setTimeout(function(){ 
+     window.setTimeout(function(){ 
       alert("Timer is up, ready for next step");
-      clearTimeout(myTimer);
       nextStep();
-      }, currTimer*1000*60);   //increment to next step after timer
+      }, currTimer*60);   //*1000 increment to next step after timer
   }
   else{
     timer.innerHTML = "No Timer Needed";
@@ -141,7 +140,7 @@ function updateTempAndTimer(){
 
 }
 
-var connection = new WebSocket('wss://websocketstest.local:81/', ['arduino']);
+var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
 connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
 connection.onerror = function (error) {    console.log('WebSocket Error ', error);};
 connection.onmessage = function (e) {  

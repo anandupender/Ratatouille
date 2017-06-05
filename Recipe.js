@@ -117,7 +117,7 @@ function updateTempAndTimer(){
     newRecipe.appendChild(timer);
   if(currRecipe.myRecipe.steps[currRecipe.stepCounter].trigger === "time"){
     var currTimer = currRecipe.myRecipe.steps[currRecipe.stepCounter].time; 
-    timer.innerHTML = currTimer + "min left";
+    timer.innerHTML = currTimer + " min left";
 
      setTimeout(function(){ 
       alert("Timer is up, ready for next step");
@@ -131,7 +131,7 @@ function updateTempAndTimer(){
   var temp = document.createElement('div');
   temp.className = "temp";
   if(currRecipe.myRecipe.steps[currRecipe.stepCounter].trigger === "temperature"){
-    temp.innerHTML = currTemp + " F / " + currRecipe.myRecipe.steps[currRecipe.stepCounter].temp;
+    temp.innerHTML = currTemp + " F / " + currRecipe.myRecipe.steps[currRecipe.stepCounter].temp + " F";
   }
   else{
     temp.innerHTML = currTemp + " F";
@@ -144,15 +144,30 @@ var connection = new WebSocket('ws://websocketstest.local:81/', ['arduino']);
 connection.onopen = function () {  connection.send('Connect ' + new Date()); }; 
 connection.onerror = function (error) {    console.log('WebSocket Error ', error);};
 connection.onmessage = function (e) {  
-    console.log('Server: ', e.data);
+  console.log('Server: ', e.data);
 
-    if(e.data[2] === "T"){  //TEMP
-        console.log("Reading in Temp");
-        var temp = e.data;
-        temp = temp.slice(15,-1); //remove beginning
-        console.log('Server (parsed): ', temp);
-        currTemp = parseInt(temp) * 9/5 + 32;
-    }
+  if(e.data[2] === "T"){  //TEMP
+      console.log("Reading in Temp");
+      var temp = e.data;
+      temp = temp.slice(15,-1); //remove beginning
+      console.log('Server (parsed): ', temp);
+      currTemp = parseInt(temp) * 9/5 + 32;
+      updateTempAndTimer();
+  }
+  if(e.data[2] === "G"){  //Gesture
+      console.log("Reading in Gesture");
+      var gesture = e.data;
+      gesture = gesture.slice(13,-2); //remove beginning
+      console.log('Server (parsed): ', gesture);
+      //if(currRecipe.myRecipe.steps[currRecipe.stepCounter].trigger === "gesture"){
+        if(gesture === "RIGHT"){
+          prevStep();
+        }
+        else if (gesture === "LEFT"){
+          nextStep();
+        }
+      //}
+  }
 };
 
 connection.onclose = function(e) {
